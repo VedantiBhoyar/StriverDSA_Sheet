@@ -1,0 +1,36 @@
+import java.util.List;
+import java.util.ArrayList;
+
+class Main {
+    static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    static void recursion(List<List<Integer>> result, int index, int[] arr) {
+        if (index == arr.length) {
+            List<Integer> list = new ArrayList<>();
+            for (int num : arr) {
+                list.add(num);
+            }
+            result.add(new ArrayList<>(list));
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) {
+            swap(arr, index, i);  // Swap elements
+            recursion(result, index + 1, arr);  // Recursive call
+            swap(arr, index, i);  // Backtrack (undo swap)
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        List<List<Integer>> result = new ArrayList<>();
+
+        recursion(result, 0, arr); 
+
+        System.out.println(result);
+    }
+}
